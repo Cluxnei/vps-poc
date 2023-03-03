@@ -2,13 +2,17 @@ version: "3"
 services:
   app_1:
     container_name: app_1
-    build: Dockerfile_app_1
+    build:
+      context: .
+      dockerfile: Dockerfile_app_1
     depends_on:
       - mysql
       - redis
   app_2:
     container_name: app_2
-    build: Dockerfile_app_2
+    build:
+      context: .
+      dockerfile: Dockerfile_app_2
     depends_on:
       - mysql
       - redis
@@ -25,12 +29,12 @@ services:
       - "mysql-data-volume:/var/lib/mysql"
   redis:
     container_name: redis
-    image: docker.io/redis:lts
+    image: docker.io/redis:latest
     volumes:
       - "redis-data-volume:/data"
   load_balancer:
     container_name: load_balancer
-    image: docker.io/nginx:lts
+    image: docker.io/nginx:stable
     ports:
       - "8080:80"
     volumes:
